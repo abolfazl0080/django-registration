@@ -20,9 +20,30 @@ class Login(LoginView):
     success_url = 'redirect after login'
     context = {}
 ```
-### **model** = your user model
-### **form** = your form login
-### **template_name** = your template name
-### **fields** = Required form fields to enter as a list default on '__all__'
-### **success_url** = url redirect after login
-### **context** = Required fields to send as dict default on {}
+#### **model** = your user model
+#### **form** = your form login
+#### **template_name** = your template name
+#### **fields** = Required form fields to enter as a list default on '__all__'
+#### **success_url** = url redirect after login
+#### **context** = Required fields to send as dict default on {}
+
+***
+## **Register View**
+```python
+class RegisterView(RegisterView):
+    model = User
+    form = RegisterForm
+    template_name = 'your template'
+    fields = '__all__'
+    success_url = 'redirect after register'
+    unique_fields = [
+        'username',
+        'phone_number',
+    ]
+    or
+    unique_fields = {
+        'username' : 'fail message',
+        'phone_number' : 'fail message',
+    }
+```
+#### **unique_fields** = To select the fields that must be unique, which is in the form of a list that displays the default message and a dict that can customize the message. 

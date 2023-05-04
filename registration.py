@@ -56,15 +56,15 @@ class RegisterView(RegistrationView):
     def check_query_post(self, fields):
         user = self.model.objects.filter(username=fields['username']).first()
         if user is not None:
-            return ['username', 'این نام کاربری قبلا ساخته شده است']
+            return ['username', 'This username has already been created']
         if not fields['password'] == fields['password_confirm']:
-            return ['password', 'رمز عبور با تایید رمز عبور برابر نیست']
+            return ['password', 'Password is not the same as confirm password']
         for field in self.unique_fields:
             query = {field: fields[field]}
             user = self.model.objects.filter(**query).first()
             if user is not None:
                 if type(self.unique_fields) is list:
-                    return [field, 'فیلدی با این نام قبلا ثبت شده است']
+                    return [field, 'A field with this name has already been registered']
                 else:
                     return [field, self.unique_fields[field]]
         return []
@@ -88,9 +88,9 @@ class LoginView(RegistrationView):
                     for user in self.model.objects.all():
                         if user.__dict__[field] == fields[field]:
                             if not user.check_password(fields['password']):
-                                return [field, 'نام کاربری یا رمز عبور اشتباه است']
+                                return [field, 'The username or password is incorrect']
                             return []
-        return ['password', 'نام کاربری یا رمز عبور اشتباه است']
+        return ['password', 'The username or password is incorrect']
 
     def after_check_post(self, fields):
         for field in fields:
