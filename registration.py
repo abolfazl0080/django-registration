@@ -8,7 +8,7 @@ class RegistrationView(View):
     model = None
     form = None
     template_name = None
-    fields = []
+    fields = '__all__'
     success_url = None
     context = {}
 
